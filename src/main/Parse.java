@@ -9,26 +9,33 @@ public class Parse {
     private final static String JSON_WEATHER_PATH = "weather.json";
 
     public static void main(String[] args) {
+        
         ObjectMapper objectMapper = new ObjectMapper();
+
         try {
-            // write your code here !
+             // write your code here !
 
             // TODO : get the root from the file JSON_WEATHER_PATH
-            JsonNode root = null;
+            //JsonNode root = null;
+            JsonNode root = objectMapper.readTree(new File(JSON_WEATHER_PATH));
 
             // TODO : get the value of "name" attribute
-            String cityName = null;
+            //String cityName = null;
+            String cityName = root.get("name").asText();
 
             // TODO : get the "lat" and "lon" values of the "coord"
-            Double cityLatitude = null;
-            Double cityLongitude = null;
+            JsonNode coordObject = root.get("coord");
+            Double cityLatitude = coordObject.get("lat").asDouble();
+            Double cityLongitude = coordObject.get("lon").asDouble();
 
             // TODO : get the "wind" attribute as an Wind object
-            Wind wind = null;
+            //Wind wind = null;
+            Wind wind = objectMapper.convertValue(root.get("wind"), Wind.class);
 
             // TODO : get the "weather" attribute as an array of Weather objects
-            Weather[] weathers = {};
-
+            //Weather[] weathers = {};
+            Weather[] weathers = objectMapper.convertValue(root.get("weather"), Weather[].class);
+           
             // Don't touch this !
             System.out.printf("City name: %s%n", cityName);
             System.out.printf("City latitude: %s%n", cityLatitude);
@@ -37,7 +44,7 @@ public class Parse {
             for (Weather weather : weathers) {
                 System.out.printf("Weather infos: %s%n", weather.toString());
             }
-            /*
+             /*
                 Expected result :
 
                 City name: London
@@ -49,6 +56,9 @@ public class Parse {
             */
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+           System.out.print("NullPointerException caught"+e.getMessage());
         }
+        
     }
 }
