@@ -1,3 +1,5 @@
+package com.wildcodeschool.jsonparse;
+
 public class Wind {
 
     private double speed;

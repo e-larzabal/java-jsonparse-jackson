@@ -1,3 +1,5 @@
+package com.wildcodeschool.jsonparse;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

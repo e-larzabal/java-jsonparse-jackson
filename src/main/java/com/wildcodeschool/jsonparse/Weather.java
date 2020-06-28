@@ -1,3 +1,5 @@
+package com.wildcodeschool.jsonparse;
+
 public class Weather {
 
     private Long id;
